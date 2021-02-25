@@ -1,0 +1,86 @@
+protected void actionPerformedBtnProcesar(ActionEvent arg0) {
+procesar();
+}
+int acbot1, acbot2, acbot3, acbot4, acmont1, acmont2, acmont3,
+acmont4;
+void procesar()
+{
+int marca, can;
+double ic,ip,id;
+marca = getMarca();
+can = getCantidad();
+ic = calcularImporteCompra(marca,can);
+id = calcularImporteDescuento(can,ic);
+ip = calcularImportePagar(ic,id);
+efectuarMonto(marca,can,ip);
+registrarVenta(marca,can);
+mostrarResultados(ic,id,ip);
+}
+void mostrarResultados(double ic,double id,double ip)
+{
+txtS.setText("Importe compra: "+ic+"\n");
+txtS.append("Importe descuento: "+id+"\n");
+txtS.append("Importe pagar: "+ip+"\n");
+txtS.append("Cantidad total perfumes NICK: "+acbot1+"\n");
+txtS.append("Cantidad total perfumes PINK: "+acbot2+"\n");
+txtS.append("Cantidad total perfumes BLUE: "+acbot3+"\n");
+txtS.append("Cantidad total perfumes PANFILA: "+acbot4+"\n");
+txtS.append("Importe acumulado de perfumes NICK:
+"+acmont1+"\n");
+txtS.append("Importe acumulado de total perfumes PINK:
+"+acmont2+"\n");
+txtS.append("Importe acumulado de total perfumes BLUE:
+"+acmont3+"\n");
+txtS.append("Importe acumulado de total perfumes :PANFILA
+"+acmont4+"\n");
+}
+void efectuarMonto(int marca, int can, double ip)
+{
+switch(marca)
+{
+case 0 :acmont1+=ip;break;
+case 1 :acmont2+=ip;break;
+case 2 :acmont3+=ip;break;
+default:acmont4+=ip;
+}
+}
+void registrarVenta(int marca, int can)
+{
+switch(marca)
+{
+case 0 :acbot1+=can;break;
+case 1 :acbot2+=can;break;
+case 2 :acbot3+=can;break;
+default:acbot4+=can;
+}
+}
+double calcularImportePagar(double ic, double id)
+{
+return ic - id;
+}
+double calcularImporteDescuento (int can, double ic)
+{
+if(can<6) return ic * 0.002;
+else if(can<11) return ic * 0.022;
+else if(can<21) return ic * 0.058;
+else return ic * 0.14;
+}
+double calcularImporteCompra(int marca, int can)
+{
+switch (marca)
+{
+case 0: return can * 300;
+case 1: return can * 95;
+case 2: return can * 120;
+default:return can * 240;
+}
+}
+int getCantidad()
+{
+return Integer.parseInt(txtCantidad.getText()
+);
+}
+int getMarca()
+{
+return cboTipo.getSelectedIndex();
+}
